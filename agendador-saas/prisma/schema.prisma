@@ -24,13 +24,12 @@ model User {
 }
 
 model Schedule {
-  id        String   @id @default(uuid())
-  userId    String
-  title     String
-  time      DateTime
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@map("Schedule") 
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String
+  eventName   String   // Campo necessário para o nome do evento
+  startTime   DateTime
+  endTime     DateTime
+  description String?
+  
+  user        User     @relation(fields: [userId], references: [id])
 }
