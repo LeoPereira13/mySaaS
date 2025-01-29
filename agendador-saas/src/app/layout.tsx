@@ -16,6 +16,9 @@ export default function RootLayout({
             <li>
               <Link href="/users">Usuários</Link>
             </li>
+            <li>
+              <Link href="/login">Login</Link>
+            </li>
           </ul>
         </nav>
         {children}

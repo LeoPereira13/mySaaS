@@ -1,85 +1,61 @@
 "use client";
-
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import "./login.css"; // Importando o CSS separado
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
 
-    const endpoint = isRegistering ? "/api/auth/register" : "/api/auth/login";
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      setError(data.message || "Erro desconhecido.");
-    } else {
-      alert(isRegistering ? "Cadastro realizado com sucesso!" : "Login bem-sucedido!");
-      if (!isRegistering) {
-        localStorage.setItem("token", data.token); // Armazena o token JWT
+      if (!res.ok) {
+        throw new Error("Falha no login. Verifique suas credenciais.");
       }
-    }
 
-    setLoading(false);
+      router.push("/dashboard"); // Redireciona para a página principal após o login
+    } catch (err) {
+      setError("Erro ao fazer login. Tente novamente.");
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-96">
-        <h2 className="text-xl font-bold mb-4">
-          {isRegistering ? "Criar Conta" : "Entrar"}
-        </h2>
-        {error && <p className="text-red-500">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">E-mail</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Senha</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-            disabled={loading}
-          >
-            {loading ? "Carregando..." : isRegistering ? "Cadastrar" : "Entrar"}
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Bem-vindo de volta</h2>
+        <form onSubmit={handleLogin}>
+          <input
+            className="input-field"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className="input-field"
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <button className="login-button" type="submit">
+            Entrar
           </button>
         </form>
-        <p className="mt-4 text-sm text-center">
-          {isRegistering ? "Já tem uma conta?" : "Ainda não tem uma conta?"}{" "}
-          <button
-            className="text-blue-500 underline"
-            onClick={() => setIsRegistering(!isRegistering)}
-          >
-            {isRegistering ? "Entrar" : "Criar Conta"}
-          </button>
-        </p>
       </div>
     </div>
   );

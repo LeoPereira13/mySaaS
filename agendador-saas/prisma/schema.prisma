@@ -15,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        Int   @id @default(autoincrement())
   name      String
   email     String   @unique
   password  String
@@ -24,8 +24,8 @@ model User {
 }
 
 model Schedule {
-  id          String   @id @default(uuid()) @db.Uuid
-  userId      String
+  id          Int   @id @default(autoincrement())
+  userId      Int
   eventName   String   // Campo necessário para o nome do evento
   startTime   DateTime
   endTime     DateTime
