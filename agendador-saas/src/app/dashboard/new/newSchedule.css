@@ -1,0 +1,59 @@
+/* src/app/dashboard/new/newSchedule.css */
+
+.container {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-container {
+    max-width: 600px;
+    width: 100%;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  label {
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  button {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: center;
+  }
+  
+  button:hover {
+    background-color: #1d4ed8;
+  }
+  

@@ -4,6 +4,7 @@ import prisma from "@/utils/prisma";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    console.log(body);
     console.log("Body recebido na requisição:", body); // Adicione este log
 
     if (!body) {
